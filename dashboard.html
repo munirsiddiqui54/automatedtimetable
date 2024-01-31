@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="dashboard.css">
+  
+</head>
+<body>
+    <div class="" style="display: flex;">
+        <nav >
+            <img src="logo.png" alt="Logo"/>
+            <ul class="d-flex" style="flex-direction: column;" id="nav">
+                <button class="btn btn-secondary px-4 my-1" id="faculty">Add Faculty</button>
+        
+                <button class="btn btn-secondary px-4 my-1" id="Subject">Add Subject</button>
+                <button class="btn btn-secondary px-4 my-1" id="Current">Current Time Table</button>
+                <button class="btn btn-secondary px-4 my-1" id="Generate" >Faculties and Subjects</button>
+            </ul>
+        </nav>
+        <main id="GeneratePage">
+           <h3> Generation Page</h3>
+           <div class="data" style="width: 100%;">
+           <ul class="facultyList">
+           
+           </ul>
+           <ul class="subjectList">
+           
+           </ul>
+            </div>
+            <button class="btn btn-success"> 
+                <a href="timetable.html"  style="color: white; text-decoration: none;">
+                   Generate
+                </a>
+            </button>
+        </main>
+        <main id="FacultyPage">
+            <ul class="facultyList">
+           
+            </ul>
+            <div>
+                <input type="text" id="teacherId" placeholder="Teacher Id"/>
+                <input type="text" id="teacherName" placeholder="Teacher Name"/>
+            </div>
+            <button class="btn btn-primary" onclick="addFaculty()">Add Faculty</button>
+        </main>
+        <main id="SubjectPage">
+            <ul class="subjectList">
+           
+            </ul>
+        </main>
+        <main id="CurrentPage">
+            Current Time Table Page
+        </main>
+    </div>
+    <script src="./main.js" ></script>  
+</body>
+</html>
