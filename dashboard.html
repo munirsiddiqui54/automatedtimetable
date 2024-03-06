@@ -9,6 +9,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <title>Document</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -67,6 +69,15 @@
                    Generate
                 </a>
             </button>
+            <button class="btn btn-primary m-5 animate" style="width: 200px;"> 
+                <a  id="makeReq" style="color: white; text-decoration: none;">
+                   MAKE REQUEST
+                </a>
+            </button>
+
+            <div >
+                <p id="display"></p>
+                              </div>
         </main>
 
         <!-- FACULTY PAGE -->
@@ -136,7 +147,6 @@
                   </table>
                 </div>
             </div>
-
         </main>
       
 
@@ -345,9 +355,6 @@
                         </div>
                         <div class="d-flex justify-content-center day">
                             <span class="head">Thursday</span>
-        
-        
-        
         
                             <span>
                                 <p>SSM</p>
@@ -777,6 +784,82 @@
             <!-- </div> -->
         </main>
     </div>
+    
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+      <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+  
+        // Fetch your API_KEY
+        const API_KEY = "";
+  
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+  
+        // ...
+  
+        const model = genAI.getGenerativeModel({ model: "gemini-pro-vision"});
+  
+        const makeRequest=async ()=>{
+            alert("Searching...")
+            console.log("Searching...")
+            const prompt=`
+Gemini Pro Time Table Generator
+
+generate time tables for two divisions A and B  using the provided data. Below are the details of faculty and subjects from 10 am to 5pm:
+Hours are in per week availability and requirement
+
+Faculty:
+101: Nikhil Sharma (Code: NS, Hours: 6)
+102: Parth Tamaghle (Code: PT, Hours: 6)
+103: Munir Siddiqui (Code: MS, Hours: 5)
+104: Riya Patil (Code: RP, Hours: 6)
+105: Rajveer Singh (Code: RS, Hours: 5)
+
+Lectures same for All Batch of same division:
+201: Maths4 (Code: M4, Hours: 4)
+202: Automata Theory and System Software (Code: ATSS, Hours: 4)
+203: Operating System (Code: OS, Hours: 4)
+204: Computer Networks Design (Code: CND, Hours: 4)
+205: Internet Programming (Code: IP, Hours: 2)
+206: Android Development (Code: AND, Hours: 2)
+
+There are 3 batches: A1,A2,A3 and B1,B2,B3
+Lab different for each batch in division
+Lab of continous 2-hours each day:
+301: OS lab   
+302: CND lab
+303: IP lab
+304: AND lab
+305: Atss Lab
+`
+        const result = await model.generateContent("/iot.png",prompt);
+        const response = await result.response;
+        let text = response.text();
+        console.log(text)
+        document.getElementById("display").innerHTML=text
+        try{
+            const data=JSON.parse(text)
+        }catch(err){
+            console.log(err)
+            text=text.replaceAll("json","")
+            text=text.replaceAll("JSON","")
+            text=text.replaceAll("`","")
+            const data=JSON.parse(text)
+            console.log(data)
+    }
+}
+        document.getElementById("makeReq").addEventListener("click",()=>{
+        makeRequest()
+})
+        // ...
+      </script>
     <script src="./main.js" ></script>  
+
 </body>
 </html>

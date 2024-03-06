@@ -5,6 +5,76 @@ let SubjectPage=document.getElementById('SubjectPage')
 let CurrentPage=document.getElementById('CurrentPage')
 let GeneratePage=document.getElementById('GeneratePage')
 
+
+// Define your prompt
+var fac={
+    101:{name:"Nikhil Sharma",code:"NS",hours:6},
+    102:{name:"Parth Tamaghle",code:"PT",hours:6},
+    103:{name:"Munir Siddiqui",code:"MS",hours:5},
+    104:{name:"Riya Patil",code:"RP",hours:6},
+    105:{name:"Rajveer Singh",code:"RS",hours:5}
+}
+var sub={
+    101:{name:"Maths4",code:"M4",hours:6},
+    102:{name:"Automata Theory and System Software",code:"ATSS",hours:6},
+    103:{name:"Oprating System",code:"OS",hours:7},
+    104:{name:"Computer Networks Design",code:"CND",hours:6},
+}
+const prompt = `Subjects Data:
+${sub}
+
+Faculties Data:
+${fac}
+
+Class Information:
+- Class A: 6 hours available per day, with a lunch break from 12:00 PM to 1:00 PM
+- Class B: 5 hours available per day, with a morning break from 10:00 AM to 10:15 AM
+
+Constraints:
+- Avoid scheduling classes during faculty unavailable hours.
+- Ensure each subject is taught the required number of hours per week.
+- Minimize gaps between classes for efficient use of time.
+
+`;
+
+// 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
+
+const key="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"
+// function makeRequest() {
+//     const prompt = "Generate a timetable for the following classes...";
+//     const apiKey = 'YOUR_API_KEY'; // Replace with your API key
+
+//     axios.post(
+//         'https://api.openai.com/v1/completions',
+//         {
+//             model: 'gpt-3.5-turbo', // Adjust as needed
+//             prompt: prompt,
+//             max_tokens: 1000 // Adjust as needed
+//         },
+//         {
+//             headers: {
+//                 'Authorization': `Bearer ${key}`,
+//                 'Content-Type': 'application/json'
+//             }
+//         }
+//     )
+//     .then((response) => {
+//         // Handle successful response
+//         console.log('Timetable:', response.data.choices[0].text);
+//     })
+//     .catch((error) => {
+//         // Handle error
+//         if (error.response && error.response.status === 429) {
+//             console.error('Rate limit exceeded. Please try again later.');
+//         } else {
+//             console.error('Error:', error.message);
+//         }
+//     });
+// }
+
+// document.getElementById("makeReq").addEventListener("click",()=>{
+//     makeRequest()
+// })
 FacultyPage.style.display="block"
 SubjectPage.style.display="none"
 CurrentPage.style.display="none"
@@ -25,13 +95,7 @@ function foo(x){
 
 
 const facultyList=document.getElementById("facultyList")
-var fac={
-    101:{name:"Nikhil Sharma",code:"NS",hours:6},
-    102:{name:"Parth Tamaghle",code:"PT",hours:6},
-    103:{name:"Munir Siddiqui",code:"MS",hours:5},
-    104:{name:"Riya Patil",code:"RP",hours:6},
-    105:{name:"Rajveer Singh",code:"RS",hours:5}
-}
+
 function getFaculty(){
     const facNode= document.createElement("tr");
     for (var key in fac) {
@@ -51,12 +115,7 @@ function getFaculty(){
       facultyList.innerHTML=facNode.innerHTML
 }
 
-var sub={
-    101:{name:"Maths4",code:"M4",hours:6},
-    102:{name:"Automata Theory and System Software",code:"ATSS",hours:6},
-    103:{name:"Oprating System",code:"OS",hours:7},
-    104:{name:"Computer Networks Design",code:"CND",hours:6},
-}
+
 const subjectList=document.getElementById("subjectList")
 
 function getSubject(){
