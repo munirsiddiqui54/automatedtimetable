@@ -1,0 +1,45 @@
+nav{
+    background-color: black;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+   
+}
+.data{
+    display: flex;
+    justify-content: space-around;
+}
+.data ul{
+background-color: beige;
+width: 30%;
+}
+nav img{
+    width: 70px;
+    border-radius: 25px;
+    margin: 20px;
+}
+
+@keyframes upToDown {
+    0% {
+        transform: translateY(100px); /* Initial position above */
+        opacity: 0; /* Optional: Starting with opacity 0 */
+    }
+    100% {
+        transform: translateY(0); /* Final position */
+        opacity: 1; /* Optional: Full opacity */
+    }
+}
+.animate{
+    animation: upToDown 1s ease-in-out forwards;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 70%;
+}
