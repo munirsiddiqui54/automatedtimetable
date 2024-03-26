@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="" style="display: flex;" >
+    <nav class="d-flex" style="height: 100vh;">
+        <img src="logo.png" alt="Logo"/>
+        <h2>Admin Dashboard</h2>
+        <ul class="d-flex mt-5" style="flex-direction: column;" id="nav">
+            <button class="btn btn-secondary px-4 my-1" id="faculty">Add Faculty</button>
+            <button class="btn btn-secondary px-4 my-1" id="Subject">Add Subject</button>
+            <button class="btn btn-secondary px-4 my-1" id="Current">Current Time Table</button>
+            <button class="btn btn-secondary px-4 my-1" id="Generate" >Faculties and Subjects</button>
+        </ul>
+    </nav>
+        <main id="GeneratePage" >
+           <h3> Info-Page</h3>
+           <div class="d-flex" style="width: 100%;justify-content: space-between;">
+            <div class="m-2 animate" style="border: 1px solid gray;">
+                
+            <table class="table container" style="width: 800px;" >
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Faculty ID</th>
+                    <th scope="col">Faculty Name</th>
+                    <th scope="col">Faculty Code</th>
+                    <th scope="col">Loading Hours</th>
+                  </tr>
+                </thead>
+                <tbody class="f_data">
+                   
+                </tbody>
+              </table>
+              
+            </div>
+            <div class="m-2 animate" style="border: 1px solid gray;">
+                
+           <table class="table container " style="width: 800px;"  >
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Course ID</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Required Hours</th>
+              </tr>
+            </thead>
+            <tbody class="s_data">
+               
+            </tbody>
+          </table>
+          
+        </div>
+            </div>
+            <button class="btn btn-success m-5 animate" style="width: 200px;"> 
+                <a href="timetable.html"  style="color: white; text-decoration: none;">
+                   Generate
+                </a>
+            </button>
+            <button class="btn btn-primary m-5 animate" style="width: 200px;"> 
+                <a  id="makeReq" style="color: white; text-decoration: none;">
+                   MAKE REQUEST
+                </a>
+            </button>
+
+            <div >
+                <p id="display"></p>
+                              </div>
+        </main>
+
+        <!-- FACULTY PAGE -->
+
+        <main id="FacultyPage">
+            <div class="d-flex mt-5" style="display: flex;justify-content: space-around;">
+                <div class="m-3 animate" style="display: flex;align-items: center;flex-direction: column;">
+                    <h3>Add Faculty</h3>
+                    <input type="text" class="form-control m-1" id="f_id"  placeholder="Enter Faculty Id">
+                    <input type="text" class="form-control m-1" id="f_name"  placeholder="Enter Faculty Name">
+                    <input type="text" class="form-control m-1" id="f_code"  placeholder="Faculty Code">
+                    <input type="text" class="form-control m-1" id="f_hours"  placeholder="Loading Hours">
+                    <button class="btn btn-primary m-1" style="width: 100%;" id="f_add">Add Course</button>
+                </div> 
+                <div>
+                <table class="table container animate" style="width: 800px;" >
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Course ID</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Course Code</th>
+                        <th scope="col">Required Hours</th>
+                        <th scope="col">Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody id="facultyList">
+                        <tr>
+                            <th scope="col">Course ID</th>
+                            <th scope="col">Course Name</th>
+                            <th scope="col">Course Code</th>
+                            <th scope="col">Required Hours</th>
+                            <th scope="col">Operation</th>
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+
+            </main>
+
+        <!-- SUBJECT PAGE -->
+
+        <main id="SubjectPage" class="pe-3 my-5">
+            <div class="d-flex animate" style="display: flex;justify-content: space-around;">
+                <div class="m-3" style="display: flex;align-items: center;flex-direction: column;">
+                    <h3>Add Subject</h3>
+                    <input type="text" class="form-control m-1" id="s_id"  placeholder="Enter Course Id">
+                    <input type="text" class="form-control m-1" id="s_name"  placeholder="Enter Course Name">
+                    <input type="text" class="form-control m-1" id="s_code"  placeholder="Course Code">
+                    <input type="text" class="form-control m-1" id="s_hours"  placeholder="Required Hours">
+                    <button class="btn btn-primary m-1" style="width: 100%;" id="s_add">Add Course</button>
+                </div> 
+                <div>
+                <table class="table container" style="width: 800px;" >
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Course ID</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Course Code</th>
+                        <th scope="col">Required Hours</th>
+                        <th scope="col">Operation</th>
+                      </tr>
+                    </thead>
+                    <tbody id="subjectList">
+                        
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </main>
+      
+
+        <!-- CURRENT TIME TABLE PAGE  -->
+
+        <main id="CurrentPage" style="overflow: scroll;height: 100vh;">
+            <div class="fluid-container animate">
+                <h3 class="text-center mt-4">SE IT-A Sem 4</h3>
+                <div class="fluid-container ">
+                    <div class="Box">
+                        <div class="d-flex justify-content-center time">
+                            <span class="head">Time</span>
+                            <span>
+                                10:00-11:00
+                            </span>
+                            <span>
+                                11:00-12:00
+                            </span>
+                            <span>
+                                12:00-1:00
+                            </span>
+                            <span>
+                                1:00-2:00
+                            </span>
+                            <span>
+                                2:00-3:00
+                            </span>
+                            <span>
+                                3:00-4:00
+                            </span>
+                            <span>
+                                4:00-5:00
+                            </span>
+                            <span>
+                                5:00-6:00
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Monday</span>
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p class="subject">Android Lab</p>
+                                    <p>CHR</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span class="">
+                                    <p>B2</p>
+                                    <p class="subject">Maths</p>
+                                    <p>AI</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span class="">
+                                    <p>B3</p>
+                                    <p class="subject">ATSS- Tut</p>
+                                    <p>CHR</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p>BSP</p>
+                                <p class="subject">OS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>ANN</p>
+                                <p class="subject">IP </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+                            <span>
+                                <p>SHS</p>
+                                <p class="subject">ATSS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>AI</p>
+                                <p class="subject">Maths 4</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>CHR</p>
+                                <p class="subject">Android</p>
+                                <p>R-302</p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Tuesday</span>
+        
+                            <span>
+                                <p>AI</p>
+                                <p class="subject">Maths</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>NIA</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Maths</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Os</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Personal Finance</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Personal Finance</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Wednesday</span>
+        
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">OS</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">ATSS </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">OS</p>
+                                <p>R-302</p>
+                            </span>
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">ATSS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Android</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Thursday</span>
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">Maths </p>
+                                <p>R302</p>
+                            </span>
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">OS </p>
+                                <p>R302</p>
+                            </span>
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Android</p>
+                                <p>R-302</p>
+                            </span>
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">ATSS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Android</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Friday</span>
+        
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">OS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Maths</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">IP</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Maths</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">ATSS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+            <div class="fluid-container m-4">
+                <h3 class="text-center mt-4">SE IT-B Sem 4</h3>
+                <div class="fluid-container ">
+                    <div class="Box">
+                        <div class="d-flex justify-content-center time">
+                            <span class="head">Time</span>
+                            <span>
+                                10:00-11:00
+                            </span>
+                            <span>
+                                11:00-12:00
+                            </span>
+                            <span>
+                                12:00-1:00
+                            </span>
+                            <span>
+                                1:00-2:00
+                            </span>
+                            <span>
+                                2:00-3:00
+                            </span>
+                            <span>
+                                3:00-4:00
+                            </span>
+                            <span>
+                                4:00-5:00
+                            </span>
+                            <span>
+                                5:00-6:00
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Monday</span>
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p class="subject">Android Lab</p>
+                                    <p>CHR</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span class="">
+                                    <p>B2</p>
+                                    <p class="subject">Maths</p>
+                                    <p>AI</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span class="">
+                                    <p>B3</p>
+                                    <p class="subject">ATSS- Tut</p>
+                                    <p>CHR</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p>BSP</p>
+                                <p class="subject">OS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>ANN</p>
+                                <p class="subject">IP </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+                            <span>
+                                <p>SHS</p>
+                                <p class="subject">ATSS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>AI</p>
+                                <p class="subject">Maths 4</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>CHR</p>
+                                <p class="subject">Android</p>
+                                <p>R-302</p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Tuesday</span>
+        
+                            <span>
+                                <p>AI</p>
+                                <p class="subject">Maths</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>NIA</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Maths</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Os</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Personal Finance</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Personal Finance</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Wednesday</span>
+        
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">OS</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">ATSS </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">OS</p>
+                                <p>R-302</p>
+                            </span>
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">ATSS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Android</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Thursday</span>
+        
+        
+        
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">Maths </p>
+                                <p>R302</p>
+                            </span>
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">OS </p>
+                                <p>R302</p>
+                            </span>
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Android</p>
+                                <p>R-302</p>
+                            </span>
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">ATSS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Android</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">IP</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center day">
+                            <span class="head">Friday</span>
+        
+        
+                            <div class="d-flex lab">
+                                <span class="">
+                                    <p>B1</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">OS</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B2</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">CND</p>
+                                    <p>R-302</p>
+                                </span>
+                                <span>
+                                    <p>B3</p>
+                                    <p>Teacher</p>
+                                    <p class="subject">Maths</p>
+                                    <p>R-302</p>
+                                </span>
+                            </div>
+        
+                            <span>
+                                <p>SSM</p>
+                                <p class="subject">CND </p>
+                                <p>R302</p>
+                            </span>
+                            <span class="break">
+                                <p>Break</p>
+                            </span>
+        
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">IP</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">Maths</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p>SHB</p>
+                                <p class="subject">ATSS</p>
+                                <p>R-302</p>
+                            </span>
+                            <span>
+                                <p></p>
+                                <p class="subject"></p>
+                                <p></p>
+                            </span>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+            <!-- </div> -->
+        </main>
+    </div>
+    
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+      <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+  
+        // Fetch your API_KEY
+        const API_KEY = "";
+  
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+  
+        // ...
+  
+        const model = genAI.getGenerativeModel({ model: "gemini-pro-vision"});
+  
+        const makeRequest=async ()=>{
+            alert("Searching...")
+            console.log("Searching...")
+            const prompt=`
+Gemini Pro Time Table Generator
+
+generate time tables for two divisions A and B  using the provided data. Below are the details of faculty and subjects from 10 am to 5pm:
+Hours are in per week availability and requirement
+
+Faculty:
+101: Nikhil Sharma (Code: NS, Hours: 6)
+102: Parth Tamaghle (Code: PT, Hours: 6)
+103: Munir Siddiqui (Code: MS, Hours: 5)
+104: Riya Patil (Code: RP, Hours: 6)
+105: Rajveer Singh (Code: RS, Hours: 5)
+
+Lectures same for All Batch of same division:
+201: Maths4 (Code: M4, Hours: 4)
+202: Automata Theory and System Software (Code: ATSS, Hours: 4)
+203: Operating System (Code: OS, Hours: 4)
+204: Computer Networks Design (Code: CND, Hours: 4)
+205: Internet Programming (Code: IP, Hours: 2)
+206: Android Development (Code: AND, Hours: 2)
+
+There are 3 batches: A1,A2,A3 and B1,B2,B3
+Lab different for each batch in division
+Lab of continous 2-hours each day:
+301: OS lab   
+302: CND lab
+303: IP lab
+304: AND lab
+305: Atss Lab
+`
+        const result = await model.generateContent("/iot.png",prompt);
+        const response = await result.response;
+        let text = response.text();
+        console.log(text)
+        document.getElementById("display").innerHTML=text
+        try{
+            const data=JSON.parse(text)
+        }catch(err){
+            console.log(err)
+            text=text.replaceAll("json","")
+            text=text.replaceAll("JSON","")
+            text=text.replaceAll("`","")
+            const data=JSON.parse(text)
+            console.log(data)
+    }
+}
+        document.getElementById("makeReq").addEventListener("click",()=>{
+        makeRequest()
+})
+        // ...
+      </script>
+    <script src="./main.js" ></script>  
+
+</body>
+</html>
